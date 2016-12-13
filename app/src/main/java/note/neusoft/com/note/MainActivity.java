@@ -6,30 +6,34 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity
+import note.neusoft.com.note.activity.BaseActivity;
+
+
+public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private FloatingActionButton fab;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
 
         //点击添加按钮
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(MainActivity.this,"saxcasc",Toast.LENGTH_SHORT).show();
+
             }
         });
 
@@ -76,10 +80,10 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-
-            return true;
-        }
+//        if (id == R.id.action_settings) {
+//
+//            return true;
+//        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -91,8 +95,9 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if(id==R.id.nav_home){//进入首页
-
+            
         }else if(id==R.id.nav_skin){//进入更换皮肤页
+           
 
         }else if(id==R.id.nav_setting){//进入设置页面
 
@@ -102,10 +107,24 @@ public class MainActivity extends AppCompatActivity
 
         }else if(id==R.id.goout){//退出程序
             ((NApplacation)this.getApplication()).destoryAllActivity();
+            return true;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+    
+
+
+
+
+
+
+
+
+
+
 }
