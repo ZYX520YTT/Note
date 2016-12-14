@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_color"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:visibility="gone"
@@ -24,7 +25,6 @@
         style="@style/note_detail_menu_item"
         android:layout_alignLeft="@+id/note_detail_img_menu"
         android:layout_below="@+id/note_detail_img_menu"
-
         android:background="#ffcef3d4"
         app:civ_border_color="@color/white"
         app:civ_border_width="2dip"
@@ -35,7 +35,6 @@
         style="@style/note_detail_menu_item"
         android:layout_alignLeft="@+id/note_detail_img_menu"
         android:layout_below="@+id/note_detail_img_green"
-
         android:background="#ffb9e5f2"
         app:civ_border_color="@color/white"
         app:civ_border_width="2dip" />
