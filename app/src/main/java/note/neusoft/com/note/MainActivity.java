@@ -1,5 +1,7 @@
 package note.neusoft.com.note;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -11,7 +13,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import note.neusoft.com.note.activity.AboutActivity;
 import note.neusoft.com.note.activity.BaseActivity;
+import note.neusoft.com.note.activity.EditActivity;
+import note.neusoft.com.note.activity.SettingActivity;
+import note.neusoft.com.note.activity.SkinActivity;
 
 
 public class MainActivity extends BaseActivity
@@ -20,12 +26,15 @@ public class MainActivity extends BaseActivity
     private FloatingActionButton fab;
     private Toolbar toolbar;
 
+    private Context context;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        context=this;
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
@@ -33,7 +42,7 @@ public class MainActivity extends BaseActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivity(new Intent(context, EditActivity.class));
             }
         });
 
@@ -95,23 +104,20 @@ public class MainActivity extends BaseActivity
         int id = item.getItemId();
 
         if(id==R.id.nav_home){//进入首页
-            
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            drawer.closeDrawer(GravityCompat.START);
         }else if(id==R.id.nav_skin){//进入更换皮肤页
-           
-
+            startActivity(new Intent(context, SkinActivity.class));
         }else if(id==R.id.nav_setting){//进入设置页面
-
+            startActivity(new Intent(context, SettingActivity.class));
         }else if(id==R.id.nav_share){//弹出分享页面
 
         }else if(id==R.id.nav_about){//弹出关于APP介绍的页面
-
+            startActivity(new Intent(context, AboutActivity.class));
         }else if(id==R.id.goout){//退出程序
             ((NApplacation)this.getApplication()).destoryAllActivity();
-            return true;
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 

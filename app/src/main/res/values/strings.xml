@@ -5,4 +5,9 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+
+    <string name="font_small">小</string>
+    <string name="font_normal">普通</string>
+    <string name="font_large">大</string>
+    <string name="font_super">较大</string>
 </resources>
