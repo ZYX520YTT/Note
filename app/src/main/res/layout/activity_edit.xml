@@ -15,12 +15,13 @@
         android:layout_marginTop="50dp"
         android:gravity="top"
         android:hint="@null"
+        android:background="#e5fce8"
         android:singleLine="false"
         android:textColor="#333" />
 
     <include
-        android:id="@+id/note_detail_menu"
-        layout="@layout/layout_note_detail_menu" />
+    android:id="@+id/note_detail_menu"
+    layout="@layout/layout_note_detail_menu" />
 
     <RelativeLayout
         android:id="@+id/note_detail_titlebar"
@@ -28,7 +29,9 @@
         android:layout_height="35dp"
         android:layout_marginTop="15dp"
         android:paddingLeft="15dp"
-        android:paddingRight="15dp" >
+        android:paddingRight="15dp"
+        android:background="#cef3d4"
+        >
 
         <TextView
             android:id="@+id/note_detail_tv_date"
@@ -37,7 +40,15 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:gravity="center"
+            android:text="2016/8/12"
             android:textColor="#666" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/blue"
+            />
 
         <ImageView
             android:id="@+id/note_detail_img_button"
