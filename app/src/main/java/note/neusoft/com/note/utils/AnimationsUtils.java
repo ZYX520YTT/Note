@@ -82,6 +82,7 @@ public class AnimationsUtils {
         AnimationSet animationSet=new AnimationSet(true);
         animationSet.addAnimation(getScaleAnimation(scaleXY,durationMillis));
         animationSet.setDuration(durationMillis);
+        animationSet.setFillAfter(true);
         return animationSet;
     }
 
@@ -116,7 +117,7 @@ public class AnimationsUtils {
      * @param durationMillis  动画时间
      */
     public static void openAnimation(RelativeLayout relativeLayout, ImageView menu,long durationMillis){
-        relativeLayout.setVisibility(View.INVISIBLE);
+        relativeLayout.setVisibility(View.VISIBLE);
         for(int i=1;i<relativeLayout.getChildCount();i++){
             ImageView imageView=null;
             if(relativeLayout.getChildAt(i) instanceof  ImageView){
@@ -128,7 +129,7 @@ public class AnimationsUtils {
             int top=imageView.getTop();
             int left=imageView.getLeft();
             if(top==0){
-                top=menu.getTop();
+                top=(menu.getHeight()+50)*i;
             }
             if(left==0){
                 left=menu.getLeft();
@@ -139,7 +140,7 @@ public class AnimationsUtils {
             set.addAnimation(getTranslateAnimation(menu.getLeft()-left,0,menu.getTop()-top+30,0,durationMillis));
             set.setFillAfter(true);
             set.setDuration(durationMillis);
-            set.setStartOffset(i*100/(-1+relativeLayout.getChildCount()));
+            set.setStartOffset((i*100)/(-1+relativeLayout.getChildCount()));
             set.setInterpolator(new OvershootInterpolator(1f));
             imageView.startAnimation(set);
         }
@@ -171,15 +172,15 @@ public class AnimationsUtils {
             animationSet.setInterpolator(new AnticipateInterpolator(1f));
             animationSet.setAnimationListener(new Animation.AnimationListener() {
                 @Override
-                public void onAnimationRepeat(Animation animation) {
+                public void onAnimationEnd(Animation animation) {
                     relativeLayout.setVisibility(View.GONE);
+                }
+                @Override
+                public void onAnimationRepeat(Animation animation) {
                 }
 
                 @Override
                 public void onAnimationStart(Animation animation) {
-                }
-                @Override
-                public void onAnimationEnd(Animation animation) {
                 }
             });
             imageView.startAnimation(animationSet);

@@ -44,10 +44,11 @@
             android:textColor="#666" />
 
         <ImageView
+            android:id="@+id/iv_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:src="@drawable/blue"
+            android:src="@drawable/green"
             />
 
         <ImageView
