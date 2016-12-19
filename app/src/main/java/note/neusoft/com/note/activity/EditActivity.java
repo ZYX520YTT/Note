@@ -2,6 +2,7 @@ package note.neusoft.com.note.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -19,6 +20,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import note.neusoft.com.note.R;
+import note.neusoft.com.note.db.NoteDatabase;
+import note.neusoft.com.note.domain.NoteInfo;
 import note.neusoft.com.note.utils.AnimationsUtils;
 import note.neusoft.com.note.widget.NoteItemCircleView;
 
@@ -46,6 +49,9 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView iv_color;
     @ViewInject(R.id.note_detail_tv_date)
     private TextView note_detail_tv_date;
+
+    private int Color;
+    private int TitleColor;
 
 
     private final int[] editcolor = new int[]{0xffe5fce8,// 绿色
@@ -77,7 +83,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onBackPressed() {//当用户点击返回按钮时，弹出一个对话框，让用户选择是否保存
         if(mAlertView==null){
-            mAlertView = new AlertView("标题", "内容", "取消", new String[]{"确定"},
+            mAlertView = new AlertView("保存", "是否需要保存？", "取消", new String[]{"确定"},
                     null, this, AlertView.Style.Alert, this).setCancelable(true).setOnDismissListener(this);
         }
         if(!mAlertView.isShowing()){
@@ -100,6 +106,9 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         });
+
+        Color=editcolor[0];
+        TitleColor=titlecolor[0];
 
         //点击那5个带颜色的图片
         note_detail_img_green.setOnClickListener(this);
@@ -132,26 +141,36 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
                 note_detail_titlebar.setBackgroundColor(titlecolor[0]);
                 note_detail_edit.setBackgroundColor(editcolor[0]);
                 iv_color.setImageResource(R.drawable.green);
+                Color=editcolor[0];
+                TitleColor=titlecolor[0];
                 break;
             case R.id.note_detail_img_blue:
                 note_detail_titlebar.setBackgroundColor(titlecolor[1]);
                 note_detail_edit.setBackgroundColor(editcolor[1]);
                 iv_color.setImageResource(R.drawable.blue);
+                Color=editcolor[1];
+                TitleColor=titlecolor[1];
                 break;
             case R.id.note_detail_img_purple:
                 note_detail_titlebar.setBackgroundColor(titlecolor[2]);
                 note_detail_edit.setBackgroundColor(editcolor[2]);
                 iv_color.setImageResource(R.drawable.purple);
+                Color=editcolor[2];
+                TitleColor=titlecolor[2];
                 break;
             case R.id.note_detail_img_yellow:
                 note_detail_titlebar.setBackgroundColor(titlecolor[3]);
                 note_detail_edit.setBackgroundColor(editcolor[3]);
                 iv_color.setImageResource(R.drawable.yellow);
+                Color=editcolor[3];
+                TitleColor=titlecolor[3];
                 break;
             case R.id.note_detail_img_red:
                 note_detail_titlebar.setBackgroundColor(titlecolor[4]);
                 note_detail_edit.setBackgroundColor(editcolor[4]);
                 iv_color.setImageResource(R.drawable.red);
+                Color=editcolor[4];
+                TitleColor=titlecolor[4];
                 break;
             default:
                 break;
@@ -186,8 +205,28 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
             finish();
         }else{//点击了确定按钮,保存
 //            Toast.makeText(EditActivity.this,"确定",Toast.LENGTH_SHORT).show();
-
-
+            if(!TextUtils.isEmpty(note_detail_edit.getText().toString())){
+                //保存
+                NoteDatabase noteDatabase=new NoteDatabase(EditActivity.this);
+                String Date=getCurrentDate();
+                String TimeId=getTimeId();
+                String Content=note_detail_edit.getText().toString();
+                NoteInfo noteInfo=new NoteInfo();
+                noteInfo.setDate(Date);
+                noteInfo.setTitleColor(TitleColor);
+                noteInfo.setColor(Color);
+                noteInfo.setTimeId(TimeId);
+                noteInfo.setContent(Content);
+                boolean insert = noteDatabase.insert(noteInfo);
+                if(insert){
+                    Toast.makeText(EditActivity.this,"保存成功！",Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(EditActivity.this,"保存失败！",Toast.LENGTH_SHORT).show();
+                }
+            }else{
+                Toast.makeText(EditActivity.this,"保存内容不能为空!",Toast.LENGTH_SHORT).show();
+            }
+            finish();
         }
     }
 
