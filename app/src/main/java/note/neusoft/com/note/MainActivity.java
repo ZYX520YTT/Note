@@ -8,16 +8,25 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
+
+import java.util.ArrayList;
 
 import note.neusoft.com.note.activity.AboutActivity;
 import note.neusoft.com.note.activity.BaseActivity;
 import note.neusoft.com.note.activity.EditActivity;
 import note.neusoft.com.note.activity.SettingActivity;
 import note.neusoft.com.note.activity.SkinActivity;
+import note.neusoft.com.note.adapter.ContentAdapter;
+import note.neusoft.com.note.db.NoteDatabase;
+import note.neusoft.com.note.domain.NoteInfo;
 
 
 public class MainActivity extends BaseActivity
@@ -28,6 +37,11 @@ public class MainActivity extends BaseActivity
 
     private Context context;
 
+    private RecyclerView review;
+    private ContentAdapter adapter;
+    private ArrayList<NoteInfo> noteInfos;
+    private NoteDatabase db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +51,8 @@ public class MainActivity extends BaseActivity
         context=this;
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
+
+        review= (RecyclerView) findViewById(R.id.review);
 
         //点击添加按钮
         fab.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +74,13 @@ public class MainActivity extends BaseActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 
+        db = new NoteDatabase(context);
+        noteInfos = db.finAll();
+
+        adapter = new ContentAdapter(context, noteInfos);
+        review.setLayoutManager(new GridLayoutManager(context,2));
+        review.setAdapter(adapter);
+        review.setItemAnimator(null);
     }
 
     @Override
@@ -77,8 +100,6 @@ public class MainActivity extends BaseActivity
 
         return true;
     }
-
-
 
 
     @Override
