@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,9 +23,12 @@ public class NoteDatabase {
 
     private String table="Notebook";
 
+    private Context context;
+
     public NoteDatabase(Context context){
         super();
         helper=new DatabaseHelper(context);
+        this.context=context;
     }
 
     /**
@@ -114,6 +118,7 @@ public class NoteDatabase {
      * @return
      */
     public ArrayList<NoteInfo> finAll(){
+//        Toast.makeText(context,"查询全部",Toast.LENGTH_SHORT).show();
         SQLiteDatabase database=helper.getReadableDatabase();
         Cursor cursor = database.query(table, new String[]{"Date", "TimeId", "Color","Content","TitleColor"},
                 null, null, null, null, null);

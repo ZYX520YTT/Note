@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -42,6 +43,9 @@ public class MainActivity extends BaseActivity
     private ArrayList<NoteInfo> noteInfos;
     private NoteDatabase db;
 
+    private boolean isCoulm;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +57,7 @@ public class MainActivity extends BaseActivity
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
         review= (RecyclerView) findViewById(R.id.review);
+        isCoulm=true;
 
         //点击添加按钮
         fab.setOnClickListener(new View.OnClickListener() {
@@ -81,6 +86,20 @@ public class MainActivity extends BaseActivity
         review.setLayoutManager(new GridLayoutManager(context,2));
         review.setAdapter(adapter);
         review.setItemAnimator(null);
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if(noteInfos!=null){
+            noteInfos.clear();
+        }
+        noteInfos=db.finAll();
+        if(adapter!=null){
+            adapter=null;
+        }
+        adapter=new ContentAdapter(context,noteInfos);
+        review.setAdapter(adapter);
     }
 
     @Override
@@ -114,6 +133,26 @@ public class MainActivity extends BaseActivity
 //
 //            return true;
 //        }
+
+        if(id==R.id.action_colunm){
+            Toast.makeText(context,"列表",Toast.LENGTH_SHORT).show();
+            if(isCoulm){
+                review.setLayoutManager(new GridLayoutManager(context,1));
+                adapter.notifyDataSetChanged();
+                isCoulm=false;
+            }else{
+                review.setLayoutManager(new GridLayoutManager(context,2));
+                adapter.notifyDataSetChanged();
+                isCoulm=true;
+            }
+            return true;
+        }else if(id==R.id.action_sort){
+            Toast.makeText(context,"排序",Toast.LENGTH_SHORT).show();
+            return true;
+        }else if(id==R.id.action_search){
+            Toast.makeText(context,"搜索",Toast.LENGTH_SHORT).show();
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
