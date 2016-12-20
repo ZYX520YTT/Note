@@ -107,9 +107,9 @@ public class NoteDatabase {
         values.put("TimeId",noteInfo.getTimeId());
         values.put("Color",noteInfo.getColor());
         values.put("Content",noteInfo.getContent());
-        values.put("TitelColor",noteInfo.getTitleColor());
+        values.put("TitleColor",noteInfo.getTitleColor());
 
-        database.update(table,values,"TimeId=?",new String[]{TimeId});
+        database.update(table, values, "TimeId=?", new String[]{TimeId});
     }
 
 

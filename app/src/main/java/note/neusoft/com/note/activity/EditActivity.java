@@ -1,5 +1,6 @@
 package note.neusoft.com.note.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -54,6 +55,12 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
     private int TitleColor;
 
 
+    private NoteInfo noteInfo;
+
+
+    private boolean isFirst=true;
+
+
     private final int[] editcolor = new int[]{0xffe5fce8,// 绿色
             0xffccf2fd,//蓝色
             0xfff7f5f6,// 紫色
@@ -69,6 +76,8 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
             0xffecc4c3,// 红色
     };
     private AlertView mAlertView;
+    private String date;
+    private String timeId;
 
 
     @Override
@@ -77,24 +86,67 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_edit);
         ViewUtils.inject(this);
 
+        Intent intent=getIntent();
+        noteInfo= (NoteInfo) intent.getSerializableExtra("noteinfo");
+
+        if(noteInfo!=null){
+            isFirst=false;
+            note_detail_edit.setText(noteInfo.getContent());
+            note_detail_edit.setSelection(noteInfo.getContent().length());//设置输入框光标选中的位置，在最后
+            note_detail_tv_date.setText(noteInfo.getDate());
+            if(noteInfo.getColor()==editcolor[0]){
+               iv_color.setImageResource(R.drawable.green);
+            }else if(noteInfo.getColor()==editcolor[1]){
+                iv_color.setImageResource(R.drawable.blue);
+            }else if(noteInfo.getColor()==editcolor[1]){
+                iv_color.setImageResource(R.drawable.purple);
+            }else if(noteInfo.getColor()==editcolor[1]){
+                iv_color.setImageResource(R.drawable.yellow);
+            }else{
+                iv_color.setImageResource(R.drawable.red);
+            }
+            note_detail_edit.setBackgroundColor(noteInfo.getColor());
+            note_detail_titlebar.setBackgroundColor(noteInfo.getTitleColor());
+            Color=noteInfo.getColor();
+            TitleColor=noteInfo.getTitleColor();
+
+            date=noteInfo.getDate();
+            timeId=noteInfo.getTimeId();
+
+        }
+
         Init();
     }
 
     @Override
     public void onBackPressed() {//当用户点击返回按钮时，弹出一个对话框，让用户选择是否保存
-        if(mAlertView==null){
-            mAlertView = new AlertView("保存", "是否需要保存？", "取消", new String[]{"确定"},
-                    null, this, AlertView.Style.Alert, this).setCancelable(true).setOnDismissListener(this);
-        }
-        if(!mAlertView.isShowing()){
-            mAlertView.show();
+        if(isFirst){
+            if(mAlertView==null){
+                mAlertView = new AlertView("保存", "是否需要保存？", "取消", new String[]{"确定"},
+                        null, this, AlertView.Style.Alert, this).setCancelable(true).setOnDismissListener(this);
+            }
+            if(!mAlertView.isShowing()){
+                mAlertView.show();
+            }
+        }else{
+            if(mAlertView==null){
+                mAlertView = new AlertView("修改", "是否保存修改？", "取消", new String[]{"确定"},
+                        null, this, AlertView.Style.Alert, this).setCancelable(true).setOnDismissListener(this);
+            }
+            if(!mAlertView.isShowing()){
+                mAlertView.show();
+            }
         }
     }
 
     private void Init() {
 
-        //初始化日期
-        note_detail_tv_date.setText(getCurrentDate());
+        if(isFirst){
+            //初始化日期
+            note_detail_tv_date.setText(getCurrentDate());
+            Color=editcolor[0];
+            TitleColor=titlecolor[0];
+        }
 
         note_detail_img_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,8 +159,6 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
-        Color=editcolor[0];
-        TitleColor=titlecolor[0];
 
         //点击那5个带颜色的图片
         note_detail_img_green.setOnClickListener(this);
@@ -208,23 +258,34 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
             if(!TextUtils.isEmpty(note_detail_edit.getText().toString())){
                 //保存
                 NoteDatabase noteDatabase=new NoteDatabase(EditActivity.this);
-                String Date=getCurrentDate();
-                String TimeId=getTimeId();
-                String Content=note_detail_edit.getText().toString();
-                NoteInfo noteInfo=new NoteInfo();
-                noteInfo.setDate(Date);
+                if(isFirst){
+                    date = getCurrentDate();
+                    timeId = getTimeId();
+                }
+                String content = note_detail_edit.getText().toString();
+                NoteInfo noteInfo= new NoteInfo();
+                noteInfo.setDate(date);
                 noteInfo.setTitleColor(TitleColor);
                 noteInfo.setColor(Color);
-                noteInfo.setTimeId(TimeId);
-                noteInfo.setContent(Content);
-                boolean insert = noteDatabase.insert(noteInfo);
-                if(insert){
-                    Toast.makeText(EditActivity.this,"保存成功！",Toast.LENGTH_SHORT).show();
+                noteInfo.setTimeId(timeId);
+                noteInfo.setContent(content);
+                if(isFirst){
+                    boolean insert = noteDatabase.insert(noteInfo);
+                    if(insert){
+                        Toast.makeText(EditActivity.this,"保存成功！",Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(EditActivity.this,"保存失败！",Toast.LENGTH_SHORT).show();
+                    }
                 }else{
-                    Toast.makeText(EditActivity.this,"保存失败！",Toast.LENGTH_SHORT).show();
+                    noteDatabase.update(timeId,noteInfo);
+                    Toast.makeText(EditActivity.this,"修改成功！",Toast.LENGTH_SHORT).show();
                 }
             }else{
-                Toast.makeText(EditActivity.this,"保存内容不能为空!",Toast.LENGTH_SHORT).show();
+                if(isFirst){
+                    Toast.makeText(EditActivity.this,"保存内容不能为空!",Toast.LENGTH_SHORT).show();
+                }else{
+                    Toast.makeText(EditActivity.this,"修改内容不能为空!",Toast.LENGTH_SHORT).show();
+                }
             }
             finish();
         }

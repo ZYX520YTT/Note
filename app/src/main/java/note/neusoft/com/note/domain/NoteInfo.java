@@ -1,12 +1,15 @@
 package note.neusoft.com.note.domain;
 
+
+import java.io.Serializable;
+
 /**
  * 作者：张宇翔
  * 创建日期： by 2016/12/19 on 20:23.
  * 描述：日记的信息
  */
 
-public class NoteInfo {
+public class NoteInfo implements Serializable{
 
     private String Date;//日期
     private  String TimeId;//时间戳

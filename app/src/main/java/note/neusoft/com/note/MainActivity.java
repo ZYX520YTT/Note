@@ -9,16 +9,15 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import note.neusoft.com.note.activity.AboutActivity;
 import note.neusoft.com.note.activity.BaseActivity;
@@ -43,7 +42,7 @@ public class MainActivity extends BaseActivity
     private ArrayList<NoteInfo> noteInfos;
     private NoteDatabase db;
 
-    private boolean isCoulm;
+    private boolean isCoulm;//判断是否是2列或者1列，true表示2列false表示1列
 
 
     @Override
@@ -52,12 +51,12 @@ public class MainActivity extends BaseActivity
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        context=this;
+        context = this;
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
 
-        review= (RecyclerView) findViewById(R.id.review);
-        isCoulm=true;
+        review = (RecyclerView) findViewById(R.id.review);
+        isCoulm = true;
 
         //点击添加按钮
         fab.setOnClickListener(new View.OnClickListener() {
@@ -74,7 +73,6 @@ public class MainActivity extends BaseActivity
         toggle.syncState();
 
 
-
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
@@ -83,7 +81,7 @@ public class MainActivity extends BaseActivity
         noteInfos = db.finAll();
 
         adapter = new ContentAdapter(context, noteInfos);
-        review.setLayoutManager(new GridLayoutManager(context,2));
+        review.setLayoutManager(new GridLayoutManager(context, 2));
         review.setAdapter(adapter);
         review.setItemAnimator(null);
     }
@@ -91,14 +89,14 @@ public class MainActivity extends BaseActivity
     @Override
     protected void onRestart() {
         super.onRestart();
-        if(noteInfos!=null){
+        if (noteInfos != null) {
             noteInfos.clear();
         }
-        noteInfos=db.finAll();
-        if(adapter!=null){
-            adapter=null;
+        noteInfos = db.finAll();
+        if (adapter != null) {
+            adapter = null;
         }
-        adapter=new ContentAdapter(context,noteInfos);
+        adapter = new ContentAdapter(context, noteInfos);
         review.setAdapter(adapter);
     }
 
@@ -134,23 +132,34 @@ public class MainActivity extends BaseActivity
 //            return true;
 //        }
 
-        if(id==R.id.action_colunm){
-            Toast.makeText(context,"列表",Toast.LENGTH_SHORT).show();
-            if(isCoulm){
-                review.setLayoutManager(new GridLayoutManager(context,1));
+        if (id == R.id.action_colunm) {
+//            Toast.makeText(context, "列表", Toast.LENGTH_SHORT).show();
+            if (isCoulm) {
+                review.setLayoutManager(new GridLayoutManager(context, 1));
                 adapter.notifyDataSetChanged();
-                isCoulm=false;
-            }else{
-                review.setLayoutManager(new GridLayoutManager(context,2));
+                isCoulm = false;
+            } else {
+                review.setLayoutManager(new GridLayoutManager(context, 2));
                 adapter.notifyDataSetChanged();
-                isCoulm=true;
+                isCoulm = true;
             }
             return true;
-        }else if(id==R.id.action_sort){
-            Toast.makeText(context,"排序",Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.action_sort) {
+//            Toast.makeText(context, "排序", Toast.LENGTH_SHORT).show();
+//            ArrayList<NoteInfo> noteInfos1=new ArrayList<>();
+//            for(int i=noteInfos.size()-1;i>=0;i--)
+//                noteInfos1.add(noteInfos.get(i));
+            Collections.reverse(noteInfos);//反转结合，进行排序
+//            if (adapter != null) {
+//                adapter = null;
+//            }
+//            adapter = new ContentAdapter(context, noteInfos);
+//            review.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+
             return true;
-        }else if(id==R.id.action_search){
-            Toast.makeText(context,"搜索",Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.action_search) {
+            Toast.makeText(context, "搜索", Toast.LENGTH_SHORT).show();
             return true;
         }
 
@@ -163,34 +172,22 @@ public class MainActivity extends BaseActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if(id==R.id.nav_home){//进入首页
+        if (id == R.id.nav_home) {//进入首页
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             drawer.closeDrawer(GravityCompat.START);
-        }else if(id==R.id.nav_skin){//进入更换皮肤页
+        } else if (id == R.id.nav_skin) {//进入更换皮肤页
             startActivity(new Intent(context, SkinActivity.class));
-        }else if(id==R.id.nav_setting){//进入设置页面
+        } else if (id == R.id.nav_setting) {//进入设置页面
             startActivity(new Intent(context, SettingActivity.class));
-        }else if(id==R.id.nav_share){//弹出分享页面
+        } else if (id == R.id.nav_share) {//弹出分享页面
 
-        }else if(id==R.id.nav_about){//弹出关于APP介绍的页面
+        } else if (id == R.id.nav_about) {//弹出关于APP介绍的页面
             startActivity(new Intent(context, AboutActivity.class));
-        }else if(id==R.id.goout){//退出程序
-            ((NApplacation)this.getApplication()).destoryAllActivity();
+        } else if (id == R.id.goout) {//退出程序
+            ((NApplacation) this.getApplication()).destoryAllActivity();
         }
 
         return true;
     }
-
-
-    
-
-
-
-
-
-
-
-
-
 
 }

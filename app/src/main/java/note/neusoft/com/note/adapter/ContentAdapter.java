@@ -1,19 +1,26 @@
 package note.neusoft.com.note.adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import java.util.ArrayList;
 
 import note.neusoft.com.note.R;
+import note.neusoft.com.note.activity.EditActivity;
 import note.neusoft.com.note.domain.NoteInfo;
+
+import static android.R.attr.value;
 
 /**
  * 作者：张宇翔
@@ -71,7 +78,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.MyViewHo
         return noteInfos.size();
     }
 
-    public class  MyViewHolder extends RecyclerView.ViewHolder{
+    public class  MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
 
         private TextView tv_note_detail;
         private RelativeLayout note_detail_titlebar;
@@ -84,6 +91,19 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.MyViewHo
             note_detail_titlebar= (RelativeLayout) itemView.findViewById(R.id.note_detail_titlebar);
             note_detail_tv_date= (TextView) itemView.findViewById(R.id.note_detail_tv_date);
             iv_color= (ImageView) itemView.findViewById(R.id.iv_color);
+
+            itemView.setOnClickListener(this);
+
+        }
+
+        @Override
+        public void onClick(View v) {
+            int postion=this.getLayoutPosition();
+            Intent intent=new Intent(context,EditActivity.class);
+            Bundle bundle=new Bundle();
+            bundle.putSerializable("noteinfo",noteInfos.get(postion));
+            intent.putExtras(bundle);
+            context.startActivity(intent);
         }
     }
 }
