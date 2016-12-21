@@ -11,6 +11,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -84,6 +85,44 @@ public class MainActivity extends BaseActivity
         review.setLayoutManager(new GridLayoutManager(context, 2));
         review.setAdapter(adapter);
         review.setItemAnimator(null);
+
+
+        ItemTouchHelper helper=new ItemTouchHelper(new ItemTouchHelper.Callback() {
+            @Override
+            public int getMovementFlags(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder) {
+                //首先回调的方法 返回int表示是否监听该方向
+                int dragFlags;
+                if(isCoulm){
+                     dragFlags = ItemTouchHelper.UP|ItemTouchHelper.DOWN|ItemTouchHelper.LEFT|ItemTouchHelper.RIGHT;//拖拽
+                }else{
+                    dragFlags = ItemTouchHelper.UP|ItemTouchHelper.DOWN;
+                }
+                return makeMovementFlags(dragFlags,0);
+            }
+
+            @Override
+            public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                Collections.swap(noteInfos,viewHolder.getAdapterPosition(),target.getAdapterPosition());
+                adapter.notifyItemMoved(viewHolder.getAdapterPosition(),target.getAdapterPosition());
+                return true;
+            }
+
+            @Override
+            public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+
+            }
+
+            @Override
+            public boolean isLongPressDragEnabled() {
+                return true;
+            }
+
+
+
+
+        });
+
+        helper.attachToRecyclerView(review);
     }
 
     @Override
