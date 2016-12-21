@@ -113,6 +113,9 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
             date=noteInfo.getDate();
             timeId=noteInfo.getTimeId();
 
+
+            //Android EditText控件如何禁止往里面输入内容
+//            note_detail_edit.setKeyListener(null);
         }
 
         Init();
