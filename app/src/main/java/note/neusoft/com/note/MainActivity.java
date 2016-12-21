@@ -15,14 +15,18 @@ import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import note.neusoft.com.note.activity.AboutActivity;
 import note.neusoft.com.note.activity.BaseActivity;
 import note.neusoft.com.note.activity.EditActivity;
+import note.neusoft.com.note.activity.PersonActivity;
 import note.neusoft.com.note.activity.SettingActivity;
 import note.neusoft.com.note.activity.SkinActivity;
 import note.neusoft.com.note.adapter.ContentAdapter;
@@ -35,6 +39,8 @@ public class MainActivity extends BaseActivity
 
     private FloatingActionButton fab;
     private Toolbar toolbar;
+    private NavigationView nav_view;
+    private LinearLayout ll_head;
 
     private Context context;
 
@@ -54,7 +60,19 @@ public class MainActivity extends BaseActivity
         setSupportActionBar(toolbar);
         context = this;
 
+
         fab = (FloatingActionButton) findViewById(R.id.fab);
+        nav_view= (NavigationView) findViewById(R.id.nav_view);
+
+        View headerView = nav_view.getHeaderView(0);//先获取头布局
+        ll_head= (LinearLayout) headerView.findViewById(R.id.ll_head);//接下来再找ID
+        ll_head.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(context, PersonActivity.class));
+            }
+        });
+
 
         review = (RecyclerView) findViewById(R.id.review);
         isCoulm = true;
@@ -139,13 +157,30 @@ public class MainActivity extends BaseActivity
         review.setAdapter(adapter);
     }
 
+
+    private boolean isExit=false;//判读是否要退出当前程序
+
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            if (isExit) {
+                super.onBackPressed();
+                ((NApplacation)this.getApplication()).destoryAllActivity();
+                finish();
+                // System.exit(0);
+            } else {
+                isExit = true;
+                new Timer().schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        isExit=false;
+                    }
+                },2000);
+                Toast.makeText(getApplicationContext(), "再点击一次退出程序", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
