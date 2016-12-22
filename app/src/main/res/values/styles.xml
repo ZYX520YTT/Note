@@ -27,6 +27,12 @@
         <item name="android:layout_marginBottom">5dp</item>
     </style>
 
+    <style name="Animations" />
+    <style name="Animations.GrowFromBottom">
+        <item name="@android:windowEnterAnimation">@anim/grow_from_bottom</item>
+        <item name="@android:windowExitAnimation">@anim/shrink_from_top</item>
+    </style>
+
 
     <style name="TextAppearanceUnderMenuIcon">
         <item name="android:textSize">@dimen/text_font_size_normal</item>

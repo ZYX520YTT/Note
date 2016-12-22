@@ -129,17 +129,15 @@
         android:background="@color/devide_line"/>
     <LinearLayout
         android:id="@+id/mine_linear_two"
-        android:layout_marginTop="20dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:orientation="vertical" >
 
         <RelativeLayout
             android:id="@+id/rl_account"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginTop="20dp"
+
             >
 
 
@@ -159,6 +157,7 @@
                 android:layout_marginLeft="7dp"
                 android:paddingRight="20dp"
                 android:layout_toRightOf="@+id/tv_account"
+                android:singleLine="true"
                 android:text="1124751755@qq.com" />
 
         </RelativeLayout>
@@ -173,12 +172,25 @@
             android:layout_height="50dp" >
 
             <TextView
+                android:id="@+id/nick"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_alignParentLeft="true"
-                android:text="昵称" />
+                android:text="昵称       ：" />
+
+            <TextView
+                android:id="@+id/tv_nick"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:paddingRight="20dp"
+                android:layout_toRightOf="@+id/nick"
+                android:singleLine="true"
+                android:text="小马" />
+
 
             <ImageView
                 android:layout_width="15dp"
@@ -202,12 +214,24 @@
 
 
             <TextView
+                android:id="@+id/sex"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_alignParentLeft="true"
-                android:text="性别" />
+                android:text="性别       ：" />
+
+            <TextView
+                android:id="@+id/tv_sex"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:paddingRight="20dp"
+                android:layout_toRightOf="@+id/sex"
+                android:singleLine="true"
+                android:text="男" />
 
             <ImageView
                 android:layout_width="15dp"
@@ -233,14 +257,27 @@
 
 
             <TextView
+                android:id="@+id/mail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="10dp"
                 android:layout_alignParentLeft="true"
-                android:text="E-Mail" />
+                android:text="E-Mail     :  " />
+
+            <TextView
+                android:id="@+id/tv_mail"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="7dp"
+                android:paddingRight="20dp"
+                android:layout_toRightOf="@+id/mail"
+                android:singleLine="true"
+                android:text="1124751755@qq.com" />
 
             <ImageView
+
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:layout_alignParentRight="true"
