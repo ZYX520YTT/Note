@@ -89,25 +89,23 @@
     <RelativeLayout
         android:id="@+id/mine_sign_relative"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginTop="14dp">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:layout_marginBottom="14dp"
+        >
 
         <TextView
             android:id="@+id/sign"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
             android:text="个性签名:" />
 
         <TextView
             android:id="@+id/sign_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="7dp"
             android:layout_toRightOf="@+id/sign"
-            android:lines="2"
             android:paddingRight="20dp"
             android:text="落花有意随流水,流水无心恋落花\n我本一心向明月,怎奈明月照沟渠" />
 

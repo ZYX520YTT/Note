@@ -92,6 +92,8 @@ public class PersonActivity extends Activity {
             @Override
             public void onClick(View v) {
                 //跳转到编辑页面
+                startActivity(new Intent(context,CompileActivity.class));
+                overridePendingTransition(R.anim.in_left_in,R.anim.in_right_out);
             }
         });
     }

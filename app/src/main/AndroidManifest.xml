@@ -31,8 +31,11 @@
             android:name=".activity.PersonActivity"
             android:theme="@android:style/Theme.Light.NoTitleBar" />
         <activity
-            android:theme="@android:style/Theme.Dialog"
-            android:name=".activity.PhotoActivity"/>
+            android:name=".activity.PhotoActivity"
+            android:theme="@android:style/Theme.Dialog" />
+        <activity
+            android:name=".activity.CompileActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
     </application>
 
 </manifest>
