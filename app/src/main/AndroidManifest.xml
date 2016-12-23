@@ -28,8 +28,11 @@
             android:name=".activity.EditActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:theme="@android:style/Theme.Light.NoTitleBar"
-            android:name=".activity.PersonActivity"/>
+            android:name=".activity.PersonActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
+        <activity
+            android:theme="@android:style/Theme.Dialog"
+            android:name=".activity.PhotoActivity"/>
     </application>
 
 </manifest>

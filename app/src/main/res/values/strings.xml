@@ -10,4 +10,8 @@
     <string name="font_normal">普通</string>
     <string name="font_large">大</string>
     <string name="font_super">较大</string>
+
+
+    <string name="dialogPicture">图库</string>
+    <string name="photo">拍照</string>
 </resources>
