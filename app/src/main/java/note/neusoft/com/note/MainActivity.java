@@ -70,6 +70,7 @@ public class MainActivity extends BaseActivity
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(context, PersonActivity.class));
+                overridePendingTransition(R.anim.in_left_in,R.anim.in_right_out);
             }
         });
 
@@ -82,7 +83,7 @@ public class MainActivity extends BaseActivity
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(context, EditActivity.class));
-
+                overridePendingTransition(R.anim.in_left_in,R.anim.in_right_out);
             }
         });
 

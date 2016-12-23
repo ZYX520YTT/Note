@@ -123,6 +123,13 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onBackPressed() {//当用户点击返回按钮时，弹出一个对话框，让用户选择是否保存
+
+        if(TextUtils.isEmpty(note_detail_edit.getText().toString())){
+            finish();
+            overridePendingTransition(R.anim.out_right_in,R.anim.out_left_out);
+            return;
+        }
+
         if(isFirst){
             if(mAlertView==null){
                 mAlertView = new AlertView("保存", "是否需要保存？", "取消", new String[]{"确定"},
@@ -256,6 +263,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         if(position==AlertView.CANCELPOSITION){//点击了取消按钮，不保存
 //            Toast.makeText(EditActivity.this,"取消",Toast.LENGTH_SHORT).show();
             finish();
+            overridePendingTransition(R.anim.out_right_in,R.anim.out_left_out);
         }else{//点击了确定按钮,保存
 //            Toast.makeText(EditActivity.this,"确定",Toast.LENGTH_SHORT).show();
             if(!TextUtils.isEmpty(note_detail_edit.getText().toString())){
@@ -283,14 +291,9 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
                     noteDatabase.update(timeId,noteInfo);
                     Toast.makeText(EditActivity.this,"修改成功！",Toast.LENGTH_SHORT).show();
                 }
-            }else{
-                if(isFirst){
-                    Toast.makeText(EditActivity.this,"保存内容不能为空!",Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(EditActivity.this,"修改内容不能为空!",Toast.LENGTH_SHORT).show();
-                }
             }
             finish();
+            overridePendingTransition(R.anim.out_right_in,R.anim.out_left_out);
         }
     }
 
