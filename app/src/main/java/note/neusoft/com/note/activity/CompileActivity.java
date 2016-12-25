@@ -2,6 +2,7 @@ package note.neusoft.com.note.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -20,10 +21,13 @@ import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnDismissListener;
 import com.bigkoo.alertview.OnItemClickListener;
 import com.bigkoo.pickerview.OptionsPickerView;
+import com.bigkoo.pickerview.TimePickerView;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import note.neusoft.com.note.R;
 
@@ -57,6 +61,7 @@ public class CompileActivity extends Activity implements OnDismissListener, OnIt
     private EditText et_signature;
 
     OptionsPickerView optionsPickerView;
+    TimePickerView pvTime;
     private ArrayList<String> Sex;
 
     private AlertView mAlertViewExt_nickname,mAlertViewExt_personnumber,mAlertViewExt_Email;
@@ -129,6 +134,18 @@ public class CompileActivity extends Activity implements OnDismissListener, OnIt
         });
 
 
+        pvTime = new TimePickerView(this, TimePickerView.Type.YEAR_MONTH_DAY);
+        pvTime.setTime(new Date());
+        pvTime.setCyclic(false);
+        pvTime.setCancelable(true);
+        pvTime.setOnTimeSelectListener(new TimePickerView.OnTimeSelectListener() {
+            @Override
+            public void onTimeSelect(Date date) {
+                tv_date.setText(getTime(date));
+            }
+        });
+
+
 
         mAlertViewExt_nickname = new AlertView("提示", "请输入您的昵称！", "取消", null, new String[]{"完成"}, this, AlertView.Style.Alert, this);
         mAlertViewExt_personnumber=new AlertView("提示", "请输入您的个人账号！", "取消", null, new String[]{"完成"}, this, AlertView.Style.Alert, this);
@@ -181,12 +198,6 @@ public class CompileActivity extends Activity implements OnDismissListener, OnIt
             }
         });
 
-        rl_date.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
 
         rl_nickname.setOnClickListener(new View.OnClickListener() {//点击昵称栏，弹出输入昵称的框
@@ -211,7 +222,7 @@ public class CompileActivity extends Activity implements OnDismissListener, OnIt
         rl_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                pvTime.show();
             }
         });
     }
@@ -249,6 +260,12 @@ public class CompileActivity extends Activity implements OnDismissListener, OnIt
             tv_personnumber.setText(etName3.getText().toString());
             etName3.setText("");
         }
+    }
+
+    //得到对应时间
+    public static String getTime(Date date) {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
+        return format.format(date);
     }
 
     /**

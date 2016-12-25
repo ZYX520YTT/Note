@@ -185,6 +185,7 @@
             android:layout_marginRight="7dp"
             android:scaleType="centerInside"
             android:src="@drawable/arrow"
+            android:visibility="invisible"
             />
     </RelativeLayout>
 
