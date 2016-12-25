@@ -1,16 +1,24 @@
 package note.neusoft.com.note.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethod;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bigkoo.alertview.AlertView;
+import com.bigkoo.alertview.OnDismissListener;
+import com.bigkoo.alertview.OnItemClickListener;
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -19,14 +27,16 @@ import java.util.ArrayList;
 
 import note.neusoft.com.note.R;
 
-public class CompileActivity extends Activity {
+public class CompileActivity extends Activity implements OnDismissListener, OnItemClickListener {
 
     @ViewInject(R.id.tv_cacel)
     private TextView tv_cacel;
     @ViewInject(R.id.tv_finish)
     private TextView tv_finish;
-    @ViewInject(R.id.et_nickname)
-    private EditText et_nickname;
+    @ViewInject(R.id.rl_nickname)
+    private RelativeLayout rl_nickname;
+    @ViewInject(R.id.tv_nickname)
+    private TextView tv_nickname;
     @ViewInject(R.id.rl_sex)
     private RelativeLayout rl_sex;
     @ViewInject(R.id.tv_sex)
@@ -35,15 +45,24 @@ public class CompileActivity extends Activity {
     private RelativeLayout rl_date;
     @ViewInject(R.id.tv_date)
     private TextView tv_date;
-    @ViewInject(R.id.et_personnumber)
-    private EditText et_personnumber;
-    @ViewInject(R.id.et_email)
-    private EditText et_email;
+    @ViewInject(R.id.rl_personnumber)
+    private RelativeLayout rl_personnumber;
+    @ViewInject(R.id.tv_personnumber)
+    private TextView tv_personnumber;
+    @ViewInject(R.id.rl_email)
+    private RelativeLayout rl_email;
+    @ViewInject(R.id.tv_email)
+    private TextView tv_email;
     @ViewInject(R.id.et_signature)
     private EditText et_signature;
 
     OptionsPickerView optionsPickerView;
     private ArrayList<String> Sex;
+
+    private AlertView mAlertViewExt_nickname,mAlertViewExt_personnumber,mAlertViewExt_Email;
+    private EditText etName1,etName2,etName3;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,7 +130,23 @@ public class CompileActivity extends Activity {
 
 
 
+        mAlertViewExt_nickname = new AlertView("提示", "请输入您的昵称！", "取消", null, new String[]{"完成"}, this, AlertView.Style.Alert, this);
+        mAlertViewExt_personnumber=new AlertView("提示", "请输入您的个人账号！", "取消", null, new String[]{"完成"}, this, AlertView.Style.Alert, this);
+        mAlertViewExt_Email=new AlertView("提示", "请输入您的E-Mail地址！", "取消", null, new String[]{"完成"}, this, AlertView.Style.Alert, this);
 
+        ViewGroup extView1= (ViewGroup) LayoutInflater.from(this).inflate(R.layout.alertext_form,null);
+        etName1= (EditText) extView1.findViewById(R.id.etName);
+        mAlertViewExt_nickname.addExtView(extView1);
+
+        ViewGroup extView2= (ViewGroup) LayoutInflater.from(this).inflate(R.layout.alertext_form,null);
+        etName2= (EditText) extView2.findViewById(R.id.etName);
+        etName2.setHint("请您输入个人账号");
+        mAlertViewExt_personnumber.addExtView(extView2);
+
+        ViewGroup extView3= (ViewGroup) LayoutInflater.from(this).inflate(R.layout.alertext_form,null);
+        etName3= (EditText) extView3.findViewById(R.id.etName);
+        etName3.setHint("请输入您的E-Mail");
+        mAlertViewExt_Email.addExtView(extView3);
     }
 
     private void Init(){
@@ -136,12 +171,6 @@ public class CompileActivity extends Activity {
                 overridePendingTransition(R.anim.out_up_in,R.anim.out_down_out);
             }
         });
-        et_nickname.setOnClickListener(new View.OnClickListener() {//当点击了这个输入框的时候，让光标显示
-            @Override
-            public void onClick(View v) {
-                et_nickname.setCursorVisible(true);
-            }
-        });
 
         rl_sex.setOnClickListener(new View.OnClickListener() {//点击进行性别选择
             @RequiresApi(api = Build.VERSION_CODES.M)
@@ -159,6 +188,32 @@ public class CompileActivity extends Activity {
             }
         });
 
+
+        rl_nickname.setOnClickListener(new View.OnClickListener() {//点击昵称栏，弹出输入昵称的框
+            @Override
+            public void onClick(View v) {
+                mAlertViewExt_nickname.show();
+            }
+        });
+        rl_personnumber.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAlertViewExt_personnumber.show();
+            }
+        });
+        rl_email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAlertViewExt_Email.show();
+            }
+        });
+
+        rl_date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
 
@@ -174,5 +229,42 @@ public class CompileActivity extends Activity {
     }
 
 
+    @Override
+    public void onDismiss(Object o) {
 
+    }
+
+    @Override
+    public void onItemClick(Object o, int position) {
+
+        if(o==mAlertViewExt_nickname&&position!=AlertView.CANCELPOSITION){
+            tv_nickname.setText(etName1.getText().toString());
+            etName1.setText("");
+        }
+        if(o==mAlertViewExt_Email&&position!=AlertView.CANCELPOSITION){
+            tv_email.setText(etName2.getText().toString());
+            etName2.setText("");
+        }
+        if(o==mAlertViewExt_personnumber&&position!=AlertView.CANCELPOSITION){
+            tv_personnumber.setText(etName3.getText().toString());
+            etName3.setText("");
+        }
+    }
+
+    /**
+     * 开启软键盘
+     */
+    private void openKeyboard(View view){
+        InputMethodManager imm= (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.showSoftInput(view,0);
+    }
+
+    /**
+     * 关闭软键盘
+     * @param view
+     */
+    private void closeKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromInputMethod(view.getWindowToken(),0);
+    }
 }
