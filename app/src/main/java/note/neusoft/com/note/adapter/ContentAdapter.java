@@ -8,10 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 
 import java.util.ArrayList;
@@ -20,7 +18,6 @@ import note.neusoft.com.note.R;
 import note.neusoft.com.note.activity.EditActivity;
 import note.neusoft.com.note.domain.NoteInfo;
 
-import static android.R.attr.value;
 
 /**
  * 作者：张宇翔

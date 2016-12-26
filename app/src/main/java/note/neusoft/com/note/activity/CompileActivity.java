@@ -88,7 +88,16 @@ public class CompileActivity extends Activity implements OnDismissListener, OnIt
         if(optionsPickerView.isShowing()){
             optionsPickerView.dismiss();
             tv_sex.setTextColor(Color.parseColor("#000000"));
-        }else{
+        }else if(mAlertViewExt_Email.isShowing()){
+            mAlertViewExt_Email.dismiss();
+        }else if(mAlertViewExt_nickname.isShowing()){
+            mAlertViewExt_nickname.dismiss();
+        }else if(mAlertViewExt_personnumber.isShowing()){
+            mAlertViewExt_personnumber.dismiss();
+        }else if(pvTime.isShowing()){
+            pvTime.dismiss();
+        }
+        else{
             finish();
             overridePendingTransition(R.anim.out_up_in,R.anim.out_down_out);
         }
