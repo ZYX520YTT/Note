@@ -163,7 +163,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
-            android:text="生日"
+            android:text="出生年月"
             android:textSize="10sp" />
 
         <TextView

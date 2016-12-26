@@ -21,9 +21,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.SkinActivity" />
-        <activity android:name=".activity.SettingActivity" />
-        <activity android:name=".activity.AboutActivity" />
+        <activity
+            android:name=".activity.SkinActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
+        <activity
+            android:name=".activity.SettingActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
+        <activity
+            android:name=".activity.AboutActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar" />
         <activity
             android:name=".activity.EditActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />

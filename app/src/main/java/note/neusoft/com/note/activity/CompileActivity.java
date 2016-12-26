@@ -16,6 +16,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnDismissListener;
@@ -27,6 +28,7 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 import note.neusoft.com.note.R;
@@ -76,6 +78,8 @@ public class CompileActivity extends Activity implements OnDismissListener, OnIt
         ViewUtils.inject(this);
         InitData();
         Init();
+
+
     }
 
     @Override
@@ -253,21 +257,44 @@ public class CompileActivity extends Activity implements OnDismissListener, OnIt
             etName1.setText("");
         }
         if(o==mAlertViewExt_Email&&position!=AlertView.CANCELPOSITION){
-            tv_email.setText(etName2.getText().toString());
-            etName2.setText("");
+            tv_email.setText(etName3.getText().toString());
+            etName3.setText("");
         }
         if(o==mAlertViewExt_personnumber&&position!=AlertView.CANCELPOSITION){
-            tv_personnumber.setText(etName3.getText().toString());
-            etName3.setText("");
+            tv_personnumber.setText(etName2.getText().toString());
+            etName2.setText("");
         }
     }
 
     //得到对应时间
-    public static String getTime(Date date) {
+    public String getTime(Date date) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
-        return format.format(date);
+        //算星座
+        SimpleDateFormat Moth=new SimpleDateFormat("MM");
+        int moth= Integer.parseInt(Moth.format(date));
+        SimpleDateFormat Day=new SimpleDateFormat("dd");
+        int day= Integer.parseInt(Day.format(date));
+        String Constellation=getConstellation(moth,day);
+        return format.format(date)+"("+Constellation+")";
     }
 
+    private final static int[] dayArr = new int[] { 20, 19, 21, 20, 21, 22, 23,
+            23, 23, 24, 23, 22 };
+    private final static String[] constellationArr = new String[] { "摩羯座",
+            "水瓶座", "双鱼座", "白羊座", "金牛座", "双子座", "巨蟹座", "狮子座", "处女座", "天秤座",
+            "天蝎座", "射手座", "摩羯座" };
+
+    /**
+     * Java通过生日计算星座
+     *
+     * @param month
+     * @param day
+     * @return
+     */
+    public static String getConstellation(int month, int day) {
+        return day < dayArr[month - 1] ? constellationArr[month - 1]
+                : constellationArr[month];
+    }
     /**
      * 开启软键盘
      */

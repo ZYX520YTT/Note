@@ -253,12 +253,15 @@ public class MainActivity extends BaseActivity
             drawer.closeDrawer(GravityCompat.START);
         } else if (id == R.id.nav_skin) {//进入更换皮肤页
             startActivity(new Intent(context, SkinActivity.class));
+            overridePendingTransition(R.anim.in_left_in,R.anim.in_right_out);
         } else if (id == R.id.nav_setting) {//进入设置页面
             startActivity(new Intent(context, SettingActivity.class));
+            overridePendingTransition(R.anim.in_left_in,R.anim.in_right_out);
         } else if (id == R.id.nav_share) {//弹出分享页面
 
         } else if (id == R.id.nav_about) {//弹出关于APP介绍的页面
             startActivity(new Intent(context, AboutActivity.class));
+            overridePendingTransition(R.anim.in_left_in,R.anim.in_right_out);
         } else if (id == R.id.goout) {//退出程序
             ((NApplacation) this.getApplication()).destoryAllActivity();
         }
