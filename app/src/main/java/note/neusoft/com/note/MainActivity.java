@@ -16,7 +16,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
+
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -37,6 +39,7 @@ import note.neusoft.com.note.domain.NoteInfo;
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+
     private FloatingActionButton fab;
     private Toolbar toolbar;
     private NavigationView nav_view;
@@ -44,12 +47,15 @@ public class MainActivity extends BaseActivity
 
     private Context context;
 
-    private RecyclerView review;
+    private  RecyclerView review;
     private ContentAdapter adapter;
     private ArrayList<NoteInfo> noteInfos;
     private NoteDatabase db;
 
     private boolean isCoulm;//判断是否是2列或者1列，true表示2列false表示1列
+
+
+    private static RelativeLayout content_main;
 
 
     @Override
@@ -60,6 +66,8 @@ public class MainActivity extends BaseActivity
         setSupportActionBar(toolbar);
         context = this;
 
+
+        content_main= (RelativeLayout) findViewById(R.id.content_main);
 
         fab = (FloatingActionButton) findViewById(R.id.fab);
         nav_view= (NavigationView) findViewById(R.id.nav_view);
@@ -105,6 +113,43 @@ public class MainActivity extends BaseActivity
         review.setLayoutManager(new GridLayoutManager(context, 2));
         review.setAdapter(adapter);
         review.setItemAnimator(null);
+
+
+        review.setOnScrollListener(new RecyclerView.OnScrollListener(){
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
+//                if(layoutManager instanceof LinearLayoutManager){
+//                    LinearLayoutManager linearManager= (LinearLayoutManager) layoutManager;
+//                    int first=linearManager.findFirstVisibleItemPosition();
+//                    int last=linearManager.findLastVisibleItemPosition();
+//
+//                    System.out.println("linearManager:第一个："+first+"最后一个："+last);
+//                }
+                if(layoutManager instanceof GridLayoutManager){
+                    GridLayoutManager gridManager= (GridLayoutManager) layoutManager;
+                    int first=gridManager.findFirstVisibleItemPosition();
+                    if(first!=0){
+                        fab.hide();
+                    }else{
+                        fab.show();
+                    }
+                }
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+            }
+
+
+        });
+
+
+
 
 
         ItemTouchHelper helper=new ItemTouchHelper(new ItemTouchHelper.Callback() {
@@ -267,6 +312,14 @@ public class MainActivity extends BaseActivity
         }
 
         return true;
+    }
+
+
+    /**
+     * 改变背景
+     */
+    public static void ChangeBG(int bg){
+        content_main.setBackgroundResource(bg);
     }
 
 }

@@ -16,6 +16,7 @@ import android.widget.ImageView;
 
 import java.util.List;
 
+import note.neusoft.com.note.MainActivity;
 import note.neusoft.com.note.R;
 
 /**
@@ -80,6 +81,7 @@ public class BgpicAdapter extends RecyclerView.Adapter<BgpicAdapter.MyViewHolder
             int postion=this.getLayoutPosition();
             index=postion;
             view.setBackgroundResource(imageid.get(postion));
+            MainActivity.ChangeBG(imageid.get(postion));
             notifyDataSetChanged();
         }
     }
