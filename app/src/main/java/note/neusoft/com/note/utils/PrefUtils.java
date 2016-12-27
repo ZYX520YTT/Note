@@ -60,13 +60,23 @@ public class PrefUtils {
 
 
     /**
-     *
+     *保存皮肤
      * @param context
      * @param imageid
      */
     public static void SaveBg(Context context,int imageid){
         SharedPreferences sp=context.getSharedPreferences(PREF_NAME,Context.MODE_PRIVATE);
-        sp.edit().putInt(BGIMAGE,imageid);
+        sp.edit().putInt(BGIMAGE,imageid).commit();
+    }
+
+    /**
+     * 得到皮肤
+     * @param context
+     * @return
+     */
+    public static int GetBg(Context context){
+        SharedPreferences sp=context.getSharedPreferences(PREF_NAME,Context.MODE_PRIVATE);
+        return sp.getInt(BGIMAGE,-1);
     }
 
 

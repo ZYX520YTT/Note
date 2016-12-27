@@ -16,8 +16,8 @@ import android.widget.ImageView;
 
 import java.util.List;
 
-import note.neusoft.com.note.MainActivity;
 import note.neusoft.com.note.R;
+import note.neusoft.com.note.utils.PrefUtils;
 
 /**
  * 作者：张宇翔
@@ -81,7 +81,8 @@ public class BgpicAdapter extends RecyclerView.Adapter<BgpicAdapter.MyViewHolder
             int postion=this.getLayoutPosition();
             index=postion;
             view.setBackgroundResource(imageid.get(postion));
-            MainActivity.ChangeBG(imageid.get(postion));
+            PrefUtils.SaveBg(context,imageid.get(postion));
+//            MainActivity.ChangeBG(imageid.get(postion));
             notifyDataSetChanged();
         }
     }

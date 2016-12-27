@@ -69,6 +69,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
         content_main= (RelativeLayout) findViewById(R.id.content_main);
 
+        if(PrefUtils.GetBg(context)!=-1){
+            ChangeBG(PrefUtils.GetBg(context));
+        }
+
         fab = (FloatingActionButton) findViewById(R.id.fab);
         nav_view= (NavigationView) findViewById(R.id.nav_view);
 
@@ -212,6 +216,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             review.setAlpha(0.55f);
         }else{
             review.setAlpha(1);
+        }
+
+        if(PrefUtils.GetBg(context)!=-1){
+            ChangeBG(PrefUtils.GetBg(context));
         }
 
     }
