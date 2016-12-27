@@ -14,4 +14,7 @@
 
     <string name="dialogPicture">图库</string>
     <string name="photo">拍照</string>
+
+    <string name="settran">应用透明背景</string>
+    <string name="jia_mi">应用加密</string>
 </resources>

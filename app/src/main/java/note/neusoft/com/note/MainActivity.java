@@ -34,6 +34,7 @@ import note.neusoft.com.note.activity.SkinActivity;
 import note.neusoft.com.note.adapter.ContentAdapter;
 import note.neusoft.com.note.db.NoteDatabase;
 import note.neusoft.com.note.domain.NoteInfo;
+import note.neusoft.com.note.utils.PrefUtils;
 
 
 public class MainActivity extends BaseActivity
@@ -113,6 +114,9 @@ public class MainActivity extends BaseActivity
         review.setLayoutManager(new GridLayoutManager(context, 2));
         review.setAdapter(adapter);
         review.setItemAnimator(null);
+        if(PrefUtils.getAlphaBg(this)){
+            review.setAlpha(0.55f);
+        }
 
 
         review.setOnScrollListener(new RecyclerView.OnScrollListener(){
