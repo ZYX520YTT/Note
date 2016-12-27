@@ -13,6 +13,8 @@ public class PrefUtils {
 
     public static final String PREF_NAME = "config";
 
+    public static final String BGIMAGE="bgimage";
+
     public static boolean getBoolean(Context ctx, String key,
                                      boolean defaultValue) {
         SharedPreferences sp = ctx.getSharedPreferences(PREF_NAME,
@@ -54,6 +56,17 @@ public class PrefUtils {
      */
     public static boolean getAlphaBg(Context context){
         return getBoolean(context,"AlphaBg",false);
+    }
+
+
+    /**
+     *
+     * @param context
+     * @param imageid
+     */
+    public static void SaveBg(Context context,int imageid){
+        SharedPreferences sp=context.getSharedPreferences(PREF_NAME,Context.MODE_PRIVATE);
+        sp.edit().putInt(BGIMAGE,imageid);
     }
 
 
