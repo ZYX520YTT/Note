@@ -43,7 +43,7 @@ public class SkinActivity extends Activity {
 
     private void InitData(){
         imageid=new ArrayList<>();
-        for(int i=1;i<=9;i++){
+        for(int i=1;i<=10;i++){
             if(i==1)
                 imageid.add(R.drawable.bg1);
             if(i==2)
@@ -62,6 +62,8 @@ public class SkinActivity extends Activity {
                 imageid.add(R.drawable.bg8);
             if(i==9)
                 imageid.add(R.drawable.bg9);
+            if(i==10)
+                imageid.add(R.drawable.bg10);
         }
     }
 

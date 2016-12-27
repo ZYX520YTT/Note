@@ -37,8 +37,7 @@ import note.neusoft.com.note.domain.NoteInfo;
 import note.neusoft.com.note.utils.PrefUtils;
 
 
-public class MainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
 
     private FloatingActionButton fab;
@@ -116,6 +115,8 @@ public class MainActivity extends BaseActivity
         review.setItemAnimator(null);
         if(PrefUtils.getAlphaBg(this)){
             review.setAlpha(0.55f);
+        }else{
+            review.setAlpha(1);
         }
 
 
@@ -206,6 +207,13 @@ public class MainActivity extends BaseActivity
         }
         adapter = new ContentAdapter(context, noteInfos);
         review.setAdapter(adapter);
+
+        if(PrefUtils.getAlphaBg(this)){
+            review.setAlpha(0.55f);
+        }else{
+            review.setAlpha(1);
+        }
+
     }
 
 
