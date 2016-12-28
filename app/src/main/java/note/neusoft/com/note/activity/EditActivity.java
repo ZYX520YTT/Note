@@ -61,6 +61,10 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
     private boolean isFirst=true;
 
 
+
+    private String ModfitytextContent;//将进来的内容赋值给这个字符串，下面用来判断是否已经修改过
+
+
     private final int[] editcolor = new int[]{0xffe5fce8,// 绿色
             0xffccf2fd,//蓝色
             0xfff7f5f6,// 紫色
@@ -93,6 +97,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
             isFirst=false;
             note_detail_edit.setText(noteInfo.getContent());
             note_detail_edit.setSelection(noteInfo.getContent().length());//设置输入框光标选中的位置，在最后
+            ModfitytextContent=noteInfo.getContent();//将进来的内容赋值给这个字符串，下面用来判断是否已经修改过
             note_detail_tv_date.setText(noteInfo.getDate());
             if(noteInfo.getColor()==editcolor[0]){
                iv_color.setImageResource(R.drawable.green);
@@ -132,6 +137,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
 
         if(isFirst){
             if(mAlertView==null){
+
                 mAlertView = new AlertView("保存", "是否需要保存？", "取消", new String[]{"确定"},
                         null, this, AlertView.Style.Alert, this).setCancelable(true).setOnDismissListener(this);
             }
@@ -140,8 +146,15 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
             }
         }else{
             if(mAlertView==null){
-                mAlertView = new AlertView("修改", "是否保存修改？", "取消", new String[]{"确定"},
-                        null, this, AlertView.Style.Alert, this).setCancelable(true).setOnDismissListener(this);
+                if(ModfitytextContent.equals(note_detail_edit.getText().toString())){
+                    finish();
+                    overridePendingTransition(R.anim.out_right_in,R.anim.out_left_out);
+                    return;
+                }else{
+                    mAlertView = new AlertView("修改", "是否保存修改？", "取消", new String[]{"确定"},
+                            null, this, AlertView.Style.Alert, this).setCancelable(true).setOnDismissListener(this);
+                }
+
             }
             if(!mAlertView.isShowing()){
                 mAlertView.show();
