@@ -170,7 +170,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
             Color=editcolor[0];
             TitleColor=titlecolor[0];
         }
-
+        note_detail_menu.setVisibility(View.GONE);//初始化画板，保持关闭状态
         note_detail_img_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

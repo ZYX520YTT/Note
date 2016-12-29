@@ -16,7 +16,7 @@
         android:gravity="top"
         android:hint="@null"
         android:background="#e5fce8"
-        android:singleLine="false"
+        android:editable="false"
         android:textColor="#333" />
 
     <include

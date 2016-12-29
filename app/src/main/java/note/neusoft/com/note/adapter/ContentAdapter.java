@@ -1,5 +1,6 @@
 package note.neusoft.com.note.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -101,6 +102,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.MyViewHo
             bundle.putSerializable("noteinfo",noteInfos.get(postion));
             intent.putExtras(bundle);
             context.startActivity(intent);
+            ((Activity)context).overridePendingTransition(R.anim.in_left_in,R.anim.in_right_out);
         }
     }
 }
