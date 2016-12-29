@@ -1,10 +1,16 @@
 package note.neusoft.com.note.activity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.hardware.input.InputManager;
 import android.os.Bundle;
+import android.renderscript.ScriptGroup;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -50,6 +56,8 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView iv_color;
     @ViewInject(R.id.note_detail_tv_date)
     private TextView note_detail_tv_date;
+    @ViewInject(R.id.rl_edit)
+    private RelativeLayout rl_edit;
 
     private int Color;
     private int TitleColor;
@@ -63,6 +71,9 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
 
 
     private String ModfitytextContent;//将进来的内容赋值给这个字符串，下面用来判断是否已经修改过
+
+
+    private InputMethodManager imm;
 
 
     private final int[] editcolor = new int[]{0xffe5fce8,// 绿色
@@ -83,13 +94,15 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
     private String date;
     private String timeId;
 
+    private Context context;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
         ViewUtils.inject(this);
-
+        context=this;
         Intent intent=getIntent();
         noteInfo= (NoteInfo) intent.getSerializableExtra("noteinfo");
 
@@ -103,15 +116,16 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
                iv_color.setImageResource(R.drawable.green);
             }else if(noteInfo.getColor()==editcolor[1]){
                 iv_color.setImageResource(R.drawable.blue);
-            }else if(noteInfo.getColor()==editcolor[1]){
+            }else if(noteInfo.getColor()==editcolor[2]){
                 iv_color.setImageResource(R.drawable.purple);
-            }else if(noteInfo.getColor()==editcolor[1]){
+            }else if(noteInfo.getColor()==editcolor[3]){
                 iv_color.setImageResource(R.drawable.yellow);
             }else{
                 iv_color.setImageResource(R.drawable.red);
             }
             note_detail_edit.setBackgroundColor(noteInfo.getColor());
             note_detail_titlebar.setBackgroundColor(noteInfo.getTitleColor());
+            rl_edit.setBackgroundColor(noteInfo.getColor());
             Color=noteInfo.getColor();
             TitleColor=noteInfo.getTitleColor();
 
@@ -121,6 +135,8 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
 
             //Android EditText控件如何禁止往里面输入内容
 //            note_detail_edit.setKeyListener(null);
+
+
         }
 
         Init();
@@ -164,6 +180,8 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
 
     private void Init() {
 
+        imm= (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+
         if(isFirst){
             //初始化日期
             note_detail_tv_date.setText(getCurrentDate());
@@ -189,6 +207,10 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         note_detail_img_purple.setOnClickListener(this);
         note_detail_img_yellow.setOnClickListener(this);
         note_detail_img_red.setOnClickListener(this);
+
+
+
+
     }
 
 
@@ -213,6 +235,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.note_detail_img_green:
                 note_detail_titlebar.setBackgroundColor(titlecolor[0]);
                 note_detail_edit.setBackgroundColor(editcolor[0]);
+                rl_edit.setBackgroundColor(editcolor[0]);
                 iv_color.setImageResource(R.drawable.green);
                 Color=editcolor[0];
                 TitleColor=titlecolor[0];
@@ -220,6 +243,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.note_detail_img_blue:
                 note_detail_titlebar.setBackgroundColor(titlecolor[1]);
                 note_detail_edit.setBackgroundColor(editcolor[1]);
+                rl_edit.setBackgroundColor(editcolor[1]);
                 iv_color.setImageResource(R.drawable.blue);
                 Color=editcolor[1];
                 TitleColor=titlecolor[1];
@@ -227,6 +251,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.note_detail_img_purple:
                 note_detail_titlebar.setBackgroundColor(titlecolor[2]);
                 note_detail_edit.setBackgroundColor(editcolor[2]);
+                rl_edit.setBackgroundColor(editcolor[2]);
                 iv_color.setImageResource(R.drawable.purple);
                 Color=editcolor[2];
                 TitleColor=titlecolor[2];
@@ -234,6 +259,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.note_detail_img_yellow:
                 note_detail_titlebar.setBackgroundColor(titlecolor[3]);
                 note_detail_edit.setBackgroundColor(editcolor[3]);
+                rl_edit.setBackgroundColor(editcolor[3]);
                 iv_color.setImageResource(R.drawable.yellow);
                 Color=editcolor[3];
                 TitleColor=titlecolor[3];
@@ -241,6 +267,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.note_detail_img_red:
                 note_detail_titlebar.setBackgroundColor(titlecolor[4]);
                 note_detail_edit.setBackgroundColor(editcolor[4]);
+                rl_edit.setBackgroundColor(editcolor[4]);
                 iv_color.setImageResource(R.drawable.red);
                 Color=editcolor[4];
                 TitleColor=titlecolor[4];

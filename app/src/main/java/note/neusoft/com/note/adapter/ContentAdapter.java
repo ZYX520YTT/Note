@@ -62,9 +62,9 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.MyViewHo
             holder.iv_color.setImageResource(R.drawable.green);
         }else if(noteInfo.getColor()==editcolor[1]){
             holder.iv_color.setImageResource(R.drawable.blue);
-        }else if(noteInfo.getColor()==editcolor[1]){
+        }else if(noteInfo.getColor()==editcolor[2]){
             holder.iv_color.setImageResource(R.drawable.purple);
-        }else if(noteInfo.getColor()==editcolor[1]){
+        }else if(noteInfo.getColor()==editcolor[3]){
             holder.iv_color.setImageResource(R.drawable.yellow);
         }else{
             holder.iv_color.setImageResource(R.drawable.red);
