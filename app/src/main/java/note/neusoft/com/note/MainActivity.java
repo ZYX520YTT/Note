@@ -99,6 +99,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
         });
 
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -279,10 +280,12 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                 review.setLayoutManager(new GridLayoutManager(context, 1));
                 adapter.notifyDataSetChanged();
                 isCoulm = false;
+                item.setTitle("缩略图");
             } else {
                 review.setLayoutManager(new GridLayoutManager(context, 2));
                 adapter.notifyDataSetChanged();
                 isCoulm = true;
+                item.setTitle("列表");
             }
             return true;
         } else if (id == R.id.action_sort) {

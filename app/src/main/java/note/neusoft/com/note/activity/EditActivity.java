@@ -8,18 +8,22 @@ import android.renderscript.ScriptGroup;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnDismissListener;
 import com.bigkoo.alertview.OnItemClickListener;
+import com.github.clans.fab.FloatingActionMenu;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
 
@@ -30,6 +34,7 @@ import note.neusoft.com.note.R;
 import note.neusoft.com.note.db.NoteDatabase;
 import note.neusoft.com.note.domain.NoteInfo;
 import note.neusoft.com.note.utils.AnimationsUtils;
+import note.neusoft.com.note.widget.InputMethodLayout;
 import note.neusoft.com.note.widget.NoteItemCircleView;
 
 public class EditActivity extends AppCompatActivity implements View.OnClickListener, OnItemClickListener, OnDismissListener {
@@ -57,7 +62,11 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
     @ViewInject(R.id.note_detail_tv_date)
     private TextView note_detail_tv_date;
     @ViewInject(R.id.rl_edit)
-    private RelativeLayout rl_edit;
+    private InputMethodLayout rl_edit;
+
+    @ViewInject(R.id.floating_action_menu)
+    private FloatingActionMenu floating_action_menu;//红圆圈视图
+
 
     private int Color;
     private int TitleColor;
@@ -66,14 +75,14 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
     private NoteInfo noteInfo;
 
 
-    private boolean isFirst=true;
+    private boolean isFirst=true;//是不是处于修改状态(true表示创建一个新的，flase表示是从已经存在的进入的)
+
 
 
 
     private String ModfitytextContent;//将进来的内容赋值给这个字符串，下面用来判断是否已经修改过
 
 
-    private InputMethodManager imm;
 
 
     private final int[] editcolor = new int[]{0xffe5fce8,// 绿色
@@ -180,7 +189,6 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
 
     private void Init() {
 
-        imm= (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
         if(isFirst){
             //初始化日期
@@ -208,6 +216,25 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         note_detail_img_yellow.setOnClickListener(this);
         note_detail_img_red.setOnClickListener(this);
 
+
+        //监听软键盘的状态
+        rl_edit.setOnkeyboarddStateListener(new InputMethodLayout.onKeyboardsChangeListener() {
+            @Override
+            public void onKeyBoardStateChange(int state) {
+                switch (state) {
+                    case InputMethodLayout.KEYBOARD_STATE_SHOW:
+//                        Toast.makeText(context, "打开软键盘", Toast.LENGTH_SHORT).show();
+                        floating_action_menu.setVisibility(View.GONE);
+                        note_detail_edit.setCursorVisible(true);
+                        break;
+                    case InputMethodLayout.KEYBOARD_STATE_HIDE:
+//                        Toast.makeText(context, "关闭软键盘", Toast.LENGTH_SHORT).show();
+                        floating_action_menu.setVisibility(View.VISIBLE);
+                        note_detail_edit.setCursorVisible(false);
+                        break;
+                }
+            }
+        });
 
 
 
@@ -341,4 +368,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
     public void onDismiss(Object o) {
 
     }
+
+
+
 }
