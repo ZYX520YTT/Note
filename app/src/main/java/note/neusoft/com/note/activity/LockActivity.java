@@ -64,6 +64,7 @@ public class LockActivity extends BaseLockActivity implements RippleView.OnRippl
 
     @Override
     public void beforeInitView() {
+
         setContentView(R.layout.activity_lock);
     }
 
@@ -102,9 +103,9 @@ public class LockActivity extends BaseLockActivity implements RippleView.OnRippl
         lockMode = (LockMode) getIntent().getSerializableExtra(Contants.INTENT_SECONDACTIVITY_KEY);
         isFirst = getIntent().getBooleanExtra("isFirst",false);
         if(isFirst){
-            title.setVisibility(View.INVISIBLE);
+            rvBack.setVisibility(View.GONE);
         }else{
-            title.setVisibility(View.VISIBLE);
+            rvBack.setVisibility(View.VISIBLE);
         }
         setLockMode(lockMode);
     }
@@ -134,7 +135,7 @@ public class LockActivity extends BaseLockActivity implements RippleView.OnRippl
                     Intent intent=new Intent(LockActivity.this,MainActivity.class);
                     startActivity(intent);
                     finish();
-                    overridePendingTransition(R.anim.out_right_in,R.anim.out_left_out);
+                    overridePendingTransition(R.anim.in_left_in,R.anim.in_right_out);
                 }else{
                     Intent intent=new Intent(LockActivity.this,UpdateLockActivity.class);
                     startActivity(intent);
@@ -256,7 +257,14 @@ public class LockActivity extends BaseLockActivity implements RippleView.OnRippl
 
     @Override
     public void onComplete(RippleView rippleView) {
-        onBackPressed();
+        finish();
+        overridePendingTransition(R.anim.out_right_in,R.anim.out_left_out);
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(R.anim.out_up_in,R.anim.out_down_out);
     }
 
 }

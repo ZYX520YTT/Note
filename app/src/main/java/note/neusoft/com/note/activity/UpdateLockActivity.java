@@ -45,11 +45,17 @@ public class UpdateLockActivity extends AppCompatActivity {
             public void onClick(View v) {
                 actionSecondActivity(LockMode.EDIT_PASSWORD);//修改密码
                 finish();
+                overridePendingTransition(R.anim.out_right_in,R.anim.out_left_out);
             }
         });
 
     }
 
+    @Override
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(R.anim.out_up_in,R.anim.out_down_out);
+    }
 
     /**
      * 跳转到密码处理界面
@@ -64,6 +70,7 @@ public class UpdateLockActivity extends AppCompatActivity {
         Intent intent = new Intent(this, LockActivity.class);
         intent.putExtra(Contants.INTENT_SECONDACTIVITY_KEY, mode);
         startActivity(intent);
+        finish();
         overridePendingTransition(R.anim.in_left_in,R.anim.in_right_out);
     }
 }

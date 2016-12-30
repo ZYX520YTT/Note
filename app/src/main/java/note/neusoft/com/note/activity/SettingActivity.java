@@ -46,8 +46,8 @@ public class SettingActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        overridePendingTransition(R.anim.out_right_in,R.anim.out_left_out);
+        finish();
+        overridePendingTransition(R.anim.out_up_in,R.anim.out_down_out);
     }
 
     @Override
@@ -55,8 +55,10 @@ public class SettingActivity extends Activity {
         super.onRestart();
         if(StringUtils.isEmpty(PasswordUtil.getPin(context))){
             tb_lock.setToggleOff();
+            PrefUtils.SetLock(context,false);
         }else{
             tb_lock.setToggleOn();
+            PrefUtils.SetLock(context,true);
         }
     }
 
