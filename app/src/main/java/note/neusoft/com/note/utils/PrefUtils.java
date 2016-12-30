@@ -15,6 +15,8 @@ public class PrefUtils {
 
     public static final String BGIMAGE="bgimage";
 
+    public static final String ISLOCK="islock";
+
     public static boolean getBoolean(Context ctx, String key,
                                      boolean defaultValue) {
         SharedPreferences sp = ctx.getSharedPreferences(PREF_NAME,
@@ -78,6 +80,27 @@ public class PrefUtils {
         SharedPreferences sp=context.getSharedPreferences(PREF_NAME,Context.MODE_PRIVATE);
         return sp.getInt(BGIMAGE,-1);
     }
+
+
+    /**
+     * 设置锁,true表示应用设置了锁，flase表示应用未加锁
+     * @param context
+     * @param islock
+     */
+    public static void SetLock(Context context,boolean islock){
+        setBoolean(context,ISLOCK,islock);
+    }
+
+    /**
+     * 获取应用是否加锁，true表示应用设置了锁，flase表示应用未加锁
+     * @param context
+     * @return
+     */
+    public static boolean GetLock(Context context){
+        return getBoolean(context,ISLOCK,false);
+    }
+
+
 
 
 

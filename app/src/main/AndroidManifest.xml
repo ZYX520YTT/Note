@@ -45,6 +45,13 @@
         <activity
             android:name=".activity.BrithdayActivity"
             android:theme="@android:style/Theme.Light.NoTitleBar" />
+        <activity
+            android:name=".activity.LockActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".activity.UpdateLockActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activity.StartActivity"></activity>
     </application>
 
 </manifest>
