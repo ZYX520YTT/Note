@@ -59,10 +59,13 @@
         android:background="@color/devide_line" />
 
 
-    <RelativeLayout
-        android:id="@+id/rl_nickname"
+    <LinearLayout
+        android:id="@+id/ll_nickname"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
 
 
         <TextView
@@ -70,20 +73,19 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:text="昵称"
             android:textSize="10sp" />
 
-        <TextView
-            android:id="@+id/tv_nickname"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/et_nickname"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/nickname"
             android:background="@null"
-            android:cursorVisible="false"
-            android:singleLine="true"
+            android:maxLines="1"
             android:text="南宫嘉俊"
             android:textSize="13sp" />
 
@@ -96,7 +98,7 @@
             android:scaleType="centerInside"
             android:src="@drawable/arrow"
             android:visibility="invisible" />
-    </RelativeLayout>
+    </LinearLayout>
 
 
     <View
@@ -128,7 +130,7 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/sex"
             android:background="@null"
-            android:singleLine="true"
+            android:maxLines="1"
             android:text="男"
             android:textSize="13sp" />
 
@@ -173,7 +175,7 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/date"
             android:background="@null"
-            android:singleLine="true"
+            android:maxLines="1"
             android:text="1995年11月09日(天蝎座)"
             android:textSize="13sp" />
 
@@ -195,10 +197,13 @@
         android:background="@color/devide_line" />
 
 
-    <RelativeLayout
-        android:id="@+id/rl_personnumber"
+    <LinearLayout
+        android:id="@+id/ll_personnumber"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
 
 
         <TextView
@@ -211,14 +216,15 @@
             android:text="个人账号"
             android:textSize="10sp" />
 
-        <TextView
-            android:id="@+id/tv_personnumber"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/et_personnumber"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/personnumber"
             android:background="@null"
-            android:singleLine="true"
+            android:maxLines="1"
             android:text="1124751755"
             android:textSize="13sp" />
 
@@ -231,7 +237,7 @@
             android:scaleType="centerInside"
             android:src="@drawable/arrow"
             android:visibility="invisible" />
-    </RelativeLayout>
+    </LinearLayout>
 
 
     <View
@@ -240,10 +246,13 @@
         android:background="@color/devide_line" />
 
 
-    <RelativeLayout
-        android:id="@+id/rl_email"
+    <LinearLayout
+        android:id="@+id/ll_email"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        >
 
 
         <TextView
@@ -256,14 +265,15 @@
             android:text="E-Mail"
             android:textSize="10sp" />
 
-        <TextView
-            android:id="@+id/tv_email"
-            android:layout_width="wrap_content"
+        <EditText
+            android:id="@+id/et_email"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@id/email"
             android:background="@null"
-            android:singleLine="true"
+            android:maxLines="1"
             android:text="1124751755@qq.com"
             android:textSize="13sp" />
 
@@ -276,7 +286,7 @@
             android:scaleType="centerInside"
             android:src="@drawable/arrow"
             android:visibility="invisible" />
-    </RelativeLayout>
+    </LinearLayout>
 
 
     <View

@@ -2,7 +2,6 @@ package note.neusoft.com.note.activity;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,12 +10,11 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethod;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnDismissListener;
@@ -28,7 +26,6 @@ import com.lidroid.xutils.view.annotation.ViewInject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 
 import note.neusoft.com.note.R;
@@ -39,10 +36,10 @@ public class CompileActivity extends Activity implements OnDismissListener, OnIt
     private TextView tv_cacel;
     @ViewInject(R.id.tv_finish)
     private TextView tv_finish;
-    @ViewInject(R.id.rl_nickname)
-    private RelativeLayout rl_nickname;
-    @ViewInject(R.id.tv_nickname)
-    private TextView tv_nickname;
+    @ViewInject(R.id.ll_nickname)
+    private LinearLayout ll_nickname;
+    @ViewInject(R.id.et_nickname)
+    private EditText et_nickname;
     @ViewInject(R.id.rl_sex)
     private RelativeLayout rl_sex;
     @ViewInject(R.id.tv_sex)
@@ -51,14 +48,14 @@ public class CompileActivity extends Activity implements OnDismissListener, OnIt
     private RelativeLayout rl_date;
     @ViewInject(R.id.tv_date)
     private TextView tv_date;
-    @ViewInject(R.id.rl_personnumber)
-    private RelativeLayout rl_personnumber;
-    @ViewInject(R.id.tv_personnumber)
-    private TextView tv_personnumber;
-    @ViewInject(R.id.rl_email)
-    private RelativeLayout rl_email;
-    @ViewInject(R.id.tv_email)
-    private TextView tv_email;
+    @ViewInject(R.id.ll_personnumber)
+    private LinearLayout ll_personnumber;
+    @ViewInject(R.id.et_personnumber)
+    private EditText et_personnumber;
+    @ViewInject(R.id.ll_email)
+    private LinearLayout ll_email;
+    @ViewInject(R.id.et_email)
+    private EditText et_email;
     @ViewInject(R.id.et_signature)
     private EditText et_signature;
 
@@ -70,12 +67,16 @@ public class CompileActivity extends Activity implements OnDismissListener, OnIt
     private EditText etName1,etName2,etName3;
 
 
+    private Context context;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_compile);
         ViewUtils.inject(this);
+        context=this;
         InitData();
         Init();
 
@@ -213,24 +214,26 @@ public class CompileActivity extends Activity implements OnDismissListener, OnIt
 
 
 
-        rl_nickname.setOnClickListener(new View.OnClickListener() {//点击昵称栏，弹出输入昵称的框
-            @Override
-            public void onClick(View v) {
-                mAlertViewExt_nickname.show();
-            }
-        });
-        rl_personnumber.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mAlertViewExt_personnumber.show();
-            }
-        });
-        rl_email.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mAlertViewExt_Email.show();
-            }
-        });
+
+
+//        rl_nickname.setOnClickListener(new View.OnClickListener() {//点击昵称栏，弹出输入昵称的框
+//            @Override
+//            public void onClick(View v) {
+//                mAlertViewExt_nickname.show();
+//            }
+//        });
+//        rl_personnumber.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mAlertViewExt_personnumber.show();
+//            }
+//        });
+//        rl_email.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mAlertViewExt_Email.show();
+//            }
+//        });
 
         rl_date.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -262,15 +265,15 @@ public class CompileActivity extends Activity implements OnDismissListener, OnIt
     public void onItemClick(Object o, int position) {
 
         if(o==mAlertViewExt_nickname&&position!=AlertView.CANCELPOSITION){
-            tv_nickname.setText(etName1.getText().toString());
+            et_nickname.setText(etName1.getText().toString());
             etName1.setText("");
         }
         if(o==mAlertViewExt_Email&&position!=AlertView.CANCELPOSITION){
-            tv_email.setText(etName3.getText().toString());
+            et_email.setText(etName3.getText().toString());
             etName3.setText("");
         }
         if(o==mAlertViewExt_personnumber&&position!=AlertView.CANCELPOSITION){
-            tv_personnumber.setText(etName2.getText().toString());
+            et_personnumber.setText(etName2.getText().toString());
             etName2.setText("");
         }
     }
