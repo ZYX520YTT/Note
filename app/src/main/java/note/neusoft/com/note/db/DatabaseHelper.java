@@ -20,7 +20,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table Notebook(_id integer primary key autoincrement,Date varchar(20)," +
-                "TimeId varchar(20),Color integer,Content TEXT,TitleColor integer)");
+                "TimeId varchar(20),Color integer,Content TEXT,TitleColor integer,TextSize float)");
     }
 
     @Override

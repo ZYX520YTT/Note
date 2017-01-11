@@ -2,27 +2,23 @@ package note.neusoft.com.note.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.hardware.input.InputManager;
 import android.os.Bundle;
-import android.renderscript.ScriptGroup;
 import android.support.v7.app.AppCompatActivity;
-import android.text.InputType;
 import android.text.TextUtils;
-import android.view.KeyEvent;
-import android.view.MotionEvent;
+import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewTreeObserver;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bigkoo.alertview.AlertView;
 import com.bigkoo.alertview.OnDismissListener;
 import com.bigkoo.alertview.OnItemClickListener;
+import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 import com.lidroid.xutils.ViewUtils;
 import com.lidroid.xutils.view.annotation.ViewInject;
@@ -63,6 +59,28 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
     private TextView note_detail_tv_date;
     @ViewInject(R.id.rl_edit)
     private InputMethodLayout rl_edit;
+    @ViewInject(R.id.menu_item_text_font)
+    private FloatingActionButton menu_item_text_font;
+    @ViewInject(R.id.ll_font_small)
+    private FrameLayout ll_font_small;
+    @ViewInject(R.id.ll_font_normal)
+    private FrameLayout ll_font_normal;
+    @ViewInject(R.id.ll_font_large)
+    private FrameLayout ll_font_large;
+    @ViewInject(R.id.ll_font_super)
+    private FrameLayout ll_font_super;
+    @ViewInject(R.id.iv_small_select)
+    private ImageView iv_small_select;
+    @ViewInject(R.id.iv_medium_select)
+    private ImageView iv_medium_select;
+    @ViewInject(R.id.iv_large_select)
+    private ImageView iv_large_select;
+    @ViewInject(R.id.iv_super_select)
+    private ImageView iv_super_select;
+
+    @ViewInject(R.id.font_size_selector)
+    private LinearLayout font_size_selector;
+
 
     @ViewInject(R.id.floating_action_menu)
     private FloatingActionMenu floating_action_menu;//红圆圈视图
@@ -70,6 +88,8 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
 
     private int Color;
     private int TitleColor;
+
+    private float textsize=14;
 
 
     private NoteInfo noteInfo;
@@ -118,6 +138,20 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         if(noteInfo!=null){
             isFirst=false;
             note_detail_edit.setText(noteInfo.getContent());
+//            note_detail_edit.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
+//            ChoseTextSize(1);//默认为普通字体
+            System.out.println("字体大小为："+noteInfo.getTextSize());
+            if(noteInfo.getTextSize()==12){
+                ChoseTextSize(0);
+            }else if(noteInfo.getTextSize()==14){
+                ChoseTextSize(1);
+            }else if(noteInfo.getTextSize()==20){
+                ChoseTextSize(2);
+            }else if(noteInfo.getTextSize()==25){
+                ChoseTextSize(3);
+            }
+
+
             note_detail_edit.setSelection(noteInfo.getContent().length());//设置输入框光标选中的位置，在最后
             ModfitytextContent=noteInfo.getContent();//将进来的内容赋值给这个字符串，下面用来判断是否已经修改过
             note_detail_tv_date.setText(noteInfo.getDate());
@@ -237,7 +271,91 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
         });
 
 
+        menu_item_text_font.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(font_size_selector.getVisibility()==LinearLayout.VISIBLE){
+                    font_size_selector.setVisibility(View.GONE);
+                }else{
+                    font_size_selector.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
+        //小号字体
+        ll_font_small.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChoseTextSize(0);
+            }
+        });
+        //普通字体
+        ll_font_normal.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChoseTextSize(1);
+            }
+        });
+        //大号字体
+        ll_font_large.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChoseTextSize(2);
+            }
+        });
+        //较大字体
+        ll_font_super.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ChoseTextSize(3);
+            }
+        });
+
+
+
+
+
+    }
+
+    /**
+     * 选择字体大小标识
+     * @param ID
+     */
+    private void ChoseTextSize(int ID){
+        switch (ID){
+            case 0://小
+                note_detail_edit.setTextSize(TypedValue.COMPLEX_UNIT_SP,12);
+                textsize=12;
+                iv_small_select.setVisibility(View.VISIBLE);
+                iv_medium_select.setVisibility(View.GONE);
+                iv_large_select.setVisibility(View.GONE);
+                iv_super_select.setVisibility(View.GONE);
+                break;
+            case 1://普通
+                note_detail_edit.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
+                textsize=14;
+                iv_small_select.setVisibility(View.GONE);
+                iv_medium_select.setVisibility(View.VISIBLE);
+                iv_large_select.setVisibility(View.GONE);
+                iv_super_select.setVisibility(View.GONE);
+                break;
+            case 2://大
+                note_detail_edit.setTextSize(TypedValue.COMPLEX_UNIT_SP,20);
+                textsize=20;
+                iv_small_select.setVisibility(View.GONE);
+                iv_medium_select.setVisibility(View.GONE);
+                iv_large_select.setVisibility(View.VISIBLE);
+                iv_super_select.setVisibility(View.GONE);
+                break;
+            case 3://较大
+                note_detail_edit.setTextSize(TypedValue.COMPLEX_UNIT_SP,25);
+                textsize=25;
+                iv_small_select.setVisibility(View.GONE);
+                iv_medium_select.setVisibility(View.GONE);
+                iv_large_select.setVisibility(View.GONE);
+                iv_super_select.setVisibility(View.VISIBLE);
+                break;
+        }
     }
 
 
@@ -347,6 +465,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
                 noteInfo.setColor(Color);
                 noteInfo.setTimeId(timeId);
                 noteInfo.setContent(content);
+                noteInfo.setTextSize(textsize);
                 if(isFirst){
                     boolean insert = noteDatabase.insert(noteInfo);
                     if(insert){

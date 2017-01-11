@@ -16,6 +16,7 @@ public class NoteInfo implements Serializable{
     private int Color;//颜色
     private String Content;//保存的内容
     private int TitleColor;
+    private float TextSize;
 
     public NoteInfo(){
 
@@ -61,4 +62,11 @@ public class NoteInfo implements Serializable{
         TimeId = timeId;
     }
 
+    public float getTextSize() {
+        return TextSize;
+    }
+
+    public void setTextSize(float textSize) {
+        TextSize = textSize;
+    }
 }

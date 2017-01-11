@@ -4,10 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import note.neusoft.com.note.domain.NoteInfo;
 
@@ -42,6 +40,7 @@ public class NoteDatabase {
         int Color=noteInfo.getColor();
         String Content=noteInfo.getContent();
         int TitleColor=noteInfo.getTitleColor();
+        float TextSize=noteInfo.getTextSize();
         SQLiteDatabase database=helper.getWritableDatabase();
 
         ContentValues values=new ContentValues();
@@ -50,6 +49,7 @@ public class NoteDatabase {
         values.put("Color",Color);
         values.put("Content",Content);
         values.put("TitleColor",TitleColor);
+        values.put("TextSize",TextSize);
 
         long id = database.insert(table, null, values);
         database.close();
@@ -81,7 +81,7 @@ public class NoteDatabase {
      */
     public NoteInfo querty(String TimeId){
         SQLiteDatabase database=helper.getReadableDatabase();
-        Cursor cursor = database.query(table, new String[]{"Date","TimeId","Color","Content","TitleColor"}, "TimeId=?", new String[]{TimeId}, null, null, null);
+        Cursor cursor = database.query(table, new String[]{"Date","TimeId","Color","Content","TitleColor","TextSize"}, "TimeId=?", new String[]{TimeId}, null, null, null);
         NoteInfo noteInfo=new NoteInfo();
         while(cursor.moveToNext()){
             noteInfo.setDate(cursor.getString(0));
@@ -89,6 +89,7 @@ public class NoteDatabase {
             noteInfo.setColor(cursor.getInt(2));
             noteInfo.setContent(cursor.getString(3));
             noteInfo.setTitleColor(cursor.getInt(4));
+            noteInfo.setTextSize(cursor.getFloat(5));
         }
         cursor.close();
         database.close();
@@ -108,6 +109,7 @@ public class NoteDatabase {
         values.put("Color",noteInfo.getColor());
         values.put("Content",noteInfo.getContent());
         values.put("TitleColor",noteInfo.getTitleColor());
+        values.put("TextSize",noteInfo.getTextSize());
 
         database.update(table, values, "TimeId=?", new String[]{TimeId});
     }
@@ -120,7 +122,7 @@ public class NoteDatabase {
     public ArrayList<NoteInfo> finAll(){
 //        Toast.makeText(context,"查询全部",Toast.LENGTH_SHORT).show();
         SQLiteDatabase database=helper.getReadableDatabase();
-        Cursor cursor = database.query(table, new String[]{"Date", "TimeId", "Color","Content","TitleColor"},
+        Cursor cursor = database.query(table, new String[]{"Date", "TimeId", "Color","Content","TitleColor","TextSize"},
                 null, null, null, null, null);
         ArrayList<NoteInfo> noteInfos=new ArrayList<>();
         while(cursor.moveToNext()){
@@ -130,6 +132,7 @@ public class NoteDatabase {
             noteInfo.setColor(cursor.getInt(2));
             noteInfo.setContent(cursor.getString(3));
             noteInfo.setTitleColor(cursor.getInt(4));
+            noteInfo.setTextSize(cursor.getFloat(5));
             noteInfos.add(noteInfo);
         }
         cursor.close();
