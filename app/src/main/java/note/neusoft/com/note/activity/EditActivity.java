@@ -140,7 +140,7 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
             note_detail_edit.setText(noteInfo.getContent());
 //            note_detail_edit.setTextSize(TypedValue.COMPLEX_UNIT_SP,14);
 //            ChoseTextSize(1);//默认为普通字体
-            System.out.println("字体大小为："+noteInfo.getTextSize());
+//            System.out.println("字体大小为："+noteInfo.getTextSize());
             if(noteInfo.getTextSize()==12){
                 ChoseTextSize(0);
             }else if(noteInfo.getTextSize()==14){
@@ -180,6 +180,8 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
 //            note_detail_edit.setKeyListener(null);
 
 
+        }else{
+            ChoseTextSize(1);
         }
 
         Init();
