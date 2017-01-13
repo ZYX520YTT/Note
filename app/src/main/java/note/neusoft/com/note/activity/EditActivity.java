@@ -59,8 +59,15 @@ public class EditActivity extends AppCompatActivity implements View.OnClickListe
     private TextView note_detail_tv_date;
     @ViewInject(R.id.rl_edit)
     private InputMethodLayout rl_edit;
-    @ViewInject(R.id.menu_item_text_font)
+
+    /*****************************点击红圆圈，弹出来的东西******************************************/
+    @ViewInject(R.id.menu_item_text_font)//设置字体大小的按钮
     private FloatingActionButton menu_item_text_font;
+    @ViewInject(R.id.menu_item_clock)//设置闹钟的按钮
+    private FloatingActionButton menu_item_clock;
+    @ViewInject(R.id.menu_item_share)//点击分享内容
+    private FloatingActionButton menu_item_share;
+    /*****************************点击红圆圈，弹出来的东西******************************************/
     @ViewInject(R.id.ll_font_small)
     private FrameLayout ll_font_small;
     @ViewInject(R.id.ll_font_normal)
